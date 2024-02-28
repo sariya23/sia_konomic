@@ -8,6 +8,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 
 from common.usernames import incorrect_usernames 
+from common.text_elements import TextElements
+
 
 @pytest.mark.parametrize("username", incorrect_usernames)
 def test_username_field(driver: webdriver, username: str):
@@ -33,4 +35,4 @@ def test_username_field(driver: webdriver, username: str):
 
     warning_element = shadow_root.find_element(By.CSS_SELECTOR, "div.remoteApplication > div > div > div > div.css-grid.k-text-default > div:nth-child(2) > form > div > div:nth-child(1) > div > div > div.v-text-field__details > div > div > div > div > div > span")
 
-    assert warning_element.text == "Допустимые символы (от 6 до 32): a-z, 0-9, _. Имя должно начинаться с буквы"
+    assert warning_element.text == TextElements.WARNING_INVALID_USERNAME
