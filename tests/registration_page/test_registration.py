@@ -15,12 +15,12 @@ from common.xpath_locators import XPATHLocators
 
 @pytest.mark.tags('mobile', 'tablet', 'desktop')
 @pytest.mark.parametrize("username", incorrect_usernames)
-def test_username_field(driver: webdriver, username: str):
+def test_invalid_username_field(driver: webdriver, username: str):
     """
     Проверяем, что при вводе username'а неверного формата появляется
     предупреждающие сообщение.
 
-    При вводе 'ничего', сообщение другое
+    При вводе 'ничего', сообщение другое.
 
     Как проверяем:
     1. Вводим неверное значение имени пользователя;
