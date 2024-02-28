@@ -1,5 +1,4 @@
 from pageo import BasePage
-
 from tests.common.urls import URLs
 
 class RegistrationPage(BasePage):
