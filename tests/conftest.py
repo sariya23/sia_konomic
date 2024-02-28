@@ -9,7 +9,7 @@ def chrome_options() -> webdriver.ChromeOptions:
     класса с настройками для Chrome.
     """
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
+    # options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
@@ -18,6 +18,6 @@ def chrome_options() -> webdriver.ChromeOptions:
 
 @pytest.fixture(scope="session")
 def driver(chrome_options):
-    driver = webdriver.ChromeOptions(chrome_options)
+    driver = webdriver.Chrome(chrome_options)
     yield driver
     driver.quit()
