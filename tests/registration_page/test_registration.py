@@ -3,13 +3,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 
-from tests.common.window_sizes import COMMON_WINDOW_SIZES
+# from tests.common.window_sizes import COMMON_WINDOW_SIZES
+from common.usernames import incorrect_usernames 
 
-
-@pytest.mark.parametrize("window_size", COMMON_WINDOW_SIZES)
-def test_username_field(driver: webdriver, window_size: tuple[int, int]):
+@pytest.mark.parametrize("username", incorrect_usernames)
+def test_username_field(driver: webdriver, username: str):
     """
     Проверяем, что если не ввести имя пользователя, то появится прудпреждающая
     надпись.
@@ -25,9 +27,12 @@ def test_username_field(driver: webdriver, window_size: tuple[int, int]):
     shadow_host = driver.find_element(By.CSS_SELECTOR, ".remoteComponent")
     shadow_root = shadow_host.shadow_root
     username_field = shadow_root.find_element(By.CSS_SELECTOR, "#input-135")
-    username_field.click()
-    email_field = shadow_root.find_element(By.CSS_SELECTOR, "#username")
-    email_field.click()
+    username_field.send_keys(username)
+    action = ActionChains(driver)
+    action.send_keys(Keys.TAB)
+    action.perform()
 
-    warning_text = shadow_root.find_element(By.CSS_SELECTOR, "div.remoteApplication > div > div > div > div.css-grid.k-text-default > div:nth-child(2) > form > div > div:nth-child(1) > div > div > div.v-text-field__details > div > div > div > div > div > span") 
-    assert warning_text.text == 'Поле не заполнено'
+
+    warning_element = shadow_root.find_element(By.CSS_SELECTOR, "div.remoteApplication > div > div > div > div.css-grid.k-text-default > div:nth-child(2) > form > div > div:nth-child(1) > div > div > div.v-text-field__details > div > div > div > div > div > span")
+
+    assert warning_element.text == "Допустимые символы (от 6 до 32): a-z, 0-9, _. Имя должно начинаться с буквы"
