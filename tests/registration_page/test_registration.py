@@ -7,19 +7,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 
-# from tests.common.window_sizes import COMMON_WINDOW_SIZES
 from common.usernames import incorrect_usernames 
 
 @pytest.mark.parametrize("username", incorrect_usernames)
 def test_username_field(driver: webdriver, username: str):
     """
-    Проверяем, что если не ввести имя пользователя, то появится прудпреждающая
-    надпись.
+    Проверяем, что при вводе username'а неверного формата появляется
+    предупреждающие сообщение.
 
     Как проверяем:
-    1. Кликаем на поле с именем пользователя;
-    2. Кликаем на любое другое поле;ш
-    3. Смотрим, что под полем имя пользователя появилась надпись 'Поле не заполнено'.
+    1. Вводим неверное значение имени пользователя;
+    2. Смотрим, что надпись появилась.
     """
     _ = RegistrationPage(driver, window_size=(640, 500))
     wait = WebDriverWait(driver, 20)
