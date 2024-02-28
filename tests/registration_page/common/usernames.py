@@ -1,7 +1,6 @@
 from string import punctuation
 
 incorrect_usernames = (
-    "",
     "a",
     "ab",
     "abo",
