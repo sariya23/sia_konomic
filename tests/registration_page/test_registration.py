@@ -11,6 +11,7 @@ from common.usernames import incorrect_usernames
 from common.text_elements import TextElements
 from common.css_locators import CSSLocators
 from common.xpath_locators import XPATHLocators
+from common.emails import incorrect_emails
 
 
 @pytest.mark.tags('mobile', 'tablet', 'desktop')
@@ -39,3 +40,28 @@ def test_invalid_username_field(driver: webdriver, username: str):
 
     warning_element = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.WARNING_ELEMENT_USERNAME)
     assert warning_element.text == TextElements.WARNING_INVALID_USERNAME
+
+
+@pytest.mark.parametrize("email", incorrect_emails)
+def test_invalid_email_field(driver: webdriver, email: str):
+    """
+    Проверяем, что при вводе email'а неверного формата появляется
+    предупреждающее сообщение.
+
+    Как проверяем:
+    1. Вводим неверное значение имени пользователя;
+    2. Смотрим, что надпись появилась.
+    """
+    _ = RegistrationPage(driver, window_size=(640, 500))
+    wait = WebDriverWait(driver, 20)
+    wait.until(EC.element_to_be_clickable((By.XPATH, XPATHLocators.LOGO_ELEMENT)))
+    shadow_host = driver.find_element(By.CSS_SELECTOR, CSSLocators.SHADOW_HOST)
+    shadow_root = shadow_host.shadow_root
+    email_field = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.EMAIL_FIELD)
+    email_field.send_keys(email)
+    action = ActionChains(driver)
+    action.send_keys(Keys.TAB).perform()
+
+
+    warning_element = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.WARNING_ELEMENT_EMAIL)
+    assert warning_element.text == TextElements.WARNING_INVALID_EMAIL
