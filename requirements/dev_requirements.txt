@@ -1,8 +1,8 @@
-selenium
-pageo
-pytest
-ruff
-pre-commmit
-mypy
-pytest-tagging
-pytest-xdist
+selenium==4.18.1
+pageo==0.3.1
+pytest==7.4.4
+ruff==0.2.2
+pre-commmit==3.6.2
+mypy==1.8.0
+pytest-tagging==1.4.1
+pytest-xdist==3.5.0
