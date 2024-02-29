@@ -15,13 +15,15 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 RUN apt update && apt -y install google-chrome-stable
 
 # Set up Chromedriver Environment variables
-ENV CHROMEDRIVER_VERSION 120.0.6099.109
+ENV CHROMEDRIVER_VERSION 122.0.6261.57
 
 # Download and install Chromedriver
 RUN wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip
 RUN unzip chromedriver-linux64.zip
 RUN mv chromedriver-linux64/chromedriver /usr/bin
 RUN chmod +x /usr/bin/chromedriver
+
+RUN export PYTHONPATH=$PWD
 
 CMD ["pytest", "-n", "auto"]
 
