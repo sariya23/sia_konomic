@@ -12,6 +12,7 @@ from common.passwords import incorrect_passwords
 from common.referral_codes import incorrect_referral_codes
 
 
+@pytest.mark.tags("fast")
 @pytest.mark.parametrize("username", incorrect_usernames)
 def test_invalid_username_field(driver: webdriver, username: str):
     """
@@ -35,6 +36,7 @@ def test_invalid_username_field(driver: webdriver, username: str):
     assert warning_element.text == TextElements.WARNING_INVALID_USERNAME
 
 
+@pytest.mark.tags("fast")
 @pytest.mark.parametrize("email", incorrect_emails)
 def test_invalid_email_field(driver: webdriver, email: str):
     """
@@ -56,6 +58,7 @@ def test_invalid_email_field(driver: webdriver, email: str):
     assert warning_element.text == TextElements.WARNING_INVALID_EMAIL
 
 
+@pytest.mark.tags("fast")
 @pytest.mark.parametrize("password", incorrect_passwords)
 def test_invalid_password_field(driver: webdriver, password: str):
     """
@@ -80,6 +83,7 @@ def test_invalid_password_field(driver: webdriver, password: str):
         assert warning_element.text == TextElements.WARNING_INVALID_PASSWORD
 
 
+@pytest.mark.tags("fast")
 @pytest.mark.parametrize("referral_code", incorrect_referral_codes)
 def test_invalid_referral_code(driver: webdriver, referral_code: str):
     """
