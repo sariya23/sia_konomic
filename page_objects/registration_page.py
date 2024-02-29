@@ -25,10 +25,10 @@ class RegistrationPage(BasePage):
 
     def __init__(self, driver: Any, base_url: str = None, url_suffix: str = None, window_size: tuple = (1920, 1080), cookies: list[dict[str, str]] = None, is_open: bool = True):  # type: ignore
         super().__init__(driver, base_url, url_suffix, window_size, cookies, is_open)
-        self.shadow_host = self._find_element(By.CSS_SELECTOR, self.SHADOW_HOST)
+        self.shadow_host = self._find_element(By.CSS_SELECTOR, self.SHADOW_HOST, duration=10)
         self.shadow_root = self.shadow_host.shadow_root
 
-    def find_element_from_shadow_dom(self, by: str, selector: str, duration: int = 5) -> WebElement:
+    def find_element_from_shadow_dom(self, by: str, selector: str, duration: int = 10) -> WebElement:
         return WebDriverWait(self.shadow_root, duration).until(EC.presence_of_element_located((by, selector)),
                                                           message=f"Не найден элемент со стратегией локатора {by} и с селектором {selector}")
 
