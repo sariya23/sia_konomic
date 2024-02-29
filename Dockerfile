@@ -1,4 +1,4 @@
-# Run: docker run --network="host" --rm -it --entrypoint bash ci_cd_tests
+# Run: docker run sia_konomic:2.0.0
 
 FROM python:3.11
 WORKDIR /app
@@ -16,14 +16,14 @@ RUN apt update && apt -y install google-chrome-stable
 
 # Set up Chromedriver Environment variables
 ENV CHROMEDRIVER_VERSION 122.0.6261.57
+ENV PYTHONPATH /app
 
 # Download and install Chromedriver
-RUN wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip
+RUN wget https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.94/linux64/chromedriver-linux64.zip
 RUN unzip chromedriver-linux64.zip
 RUN mv chromedriver-linux64/chromedriver /usr/bin
 RUN chmod +x /usr/bin/chromedriver
 
-RUN export PYTHONPATH=$PWD
 
 CMD ["pytest", "-n", "auto"]
 
