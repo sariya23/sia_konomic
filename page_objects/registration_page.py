@@ -23,7 +23,7 @@ class RegistrationPage(BasePage):
     WARNING_ELEMENT_PASSWORD = "div.remoteApplication > div > div > div > div.css-grid.k-text-default > div:nth-child(2) > form > div > div:nth-child(3) > div > div > div > div > div.v-text-field__details > div > div > div > div > div > span"
     LOGO_ELEMENT = "(//*[@class='router-link-active'])[1]"
     REFERRAL_CODE_FIELD = "#input-175"
-    WARNING_ELEMENT_REFERAL_CODE = "div.remoteApplication > div > div > div > div.css-grid.k-text-default > div:nth-child(2) > form > div > div:nth-child(4) > div > div > div.v-text-field__details > div > div > div > div > div > span"
+    WARNING_ELEMENT_REFERRAL_CODE = "div.remoteApplication > div > div > div > div.css-grid.k-text-default > div:nth-child(2) > form > div > div:nth-child(4) > div > div > div.v-text-field__details > div > div > div > div > div > span"
 
     def __init__(self, driver: Any, base_url: str = None, url_suffix: str = None, window_size: tuple = (1920, 1080), cookies: list[dict[str, str]] = None, is_open: bool = True):  # type: ignore
         super().__init__(driver, base_url, url_suffix, window_size, cookies, is_open)

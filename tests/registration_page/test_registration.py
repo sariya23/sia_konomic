@@ -9,6 +9,7 @@ from common.usernames import incorrect_usernames
 from common.text_elements import TextElements
 from common.emails import incorrect_emails
 from common.passwords import incorrect_passwords
+from common.referral_codes import incorrect_referral_codes
 
 
 @pytest.mark.parametrize("username", incorrect_usernames)
@@ -20,7 +21,7 @@ def test_invalid_username_field(driver: webdriver, username: str):
     При вводе пустого значения, сообщение другое - Обязательное поле.
 
     Как проверяем:
-    1. Вводим неверное значение имени пользователя;
+    1. Вводим невалидное значение имени пользователя;
     2. Смотрим, что надпись появилась.
     """
     page = RegistrationPage(driver, window_size=(640, 500))
@@ -41,7 +42,7 @@ def test_invalid_email_field(driver: webdriver, email: str):
     предупреждающее сообщение.
 
     Как проверяем:
-    1. Вводим неверное значение имени пользователя;
+    1. Вводим невалидное значение имени пользователя;
     2. Смотрим, что надпись появилась.
     """
     page = RegistrationPage(driver, window_size=(640, 500)) 
@@ -62,7 +63,7 @@ def test_invalid_password_field(driver: webdriver, password: str):
     предупреждающее сообщение.
 
     Как проверяем:
-    1. Вводим неверное значение имени пользователя;
+    1. Вводим невалидное значение имени пользователя;
     2. Смотрим, что надпись появилась.
     """
     page = RegistrationPage(driver, window_size=(640, 500))  
@@ -77,3 +78,24 @@ def test_invalid_password_field(driver: webdriver, password: str):
     else:
         warning_element = page.find_element_from_shadow_dom(By.CSS_SELECTOR, page.WARNING_ELEMENT_PASSWORD)
         assert warning_element.text == TextElements.WARNING_INVALID_PASSWORD
+
+
+@pytest.mark.parametrize("referral_code", incorrect_referral_codes)
+def test_invalid_referral_code(driver: webdriver, referral_code: str):
+    """
+    Проверяем, что при вводе неверного формата реферальной ссылки
+    появляется предупреждающее сообщение.
+
+    Как проверяем:
+    1. Вводим невалидное значение реферального кода;
+    2. Смотрим, что сообшение появилось. 
+    """
+    page = RegistrationPage(driver, window_size=(640, 500)) 
+    email_field = page.find_element_from_shadow_dom(By.CSS_SELECTOR, page.REFERRAL_CODE_FIELD)
+    email_field.send_keys(referral_code)
+    action = ActionChains(driver)
+    action.send_keys(Keys.TAB).perform()
+
+
+    warning_element = page.find_element_from_shadow_dom(By.CSS_SELECTOR, page.WARNING_ELEMENT_REFERRAL_CODE)
+    assert warning_element.text == TextElements.WARNING_INVALID_REFERRAL_CODE

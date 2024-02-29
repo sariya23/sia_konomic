@@ -3,3 +3,4 @@ class TextElements:
     WARNING_INVALID_EMAIL = "Формат e-mail: somebody@somewhere.ru"
     WARNING_INVALID_PASSWORD_LEN = "Пароль должен содержать минимум 8 символов"
     WARNING_INVALID_PASSWORD = "Пароль должен содержать от 8 до 64 символов, включая заглавные буквы и цифры"
+    WARNING_INVALID_REFERRAL_CODE = "Неверный формат ссылки"
