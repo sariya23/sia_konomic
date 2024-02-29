@@ -28,18 +28,14 @@ def test_invalid_username_field(driver: webdriver, username: str):
     1. Вводим неверное значение имени пользователя;
     2. Смотрим, что надпись появилась.
     """
-    _ = RegistrationPage(driver, window_size=(640, 500))
-    wait = WebDriverWait(driver, 20)
-    wait.until(EC.element_to_be_clickable((By.XPATH, XPATHLocators.LOGO_ELEMENT)))
-    shadow_host = driver.find_element(By.CSS_SELECTOR, CSSLocators.SHADOW_HOST)
-    shadow_root = shadow_host.shadow_root
-    username_field = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.USER_NAME_FIELD)
+    page = RegistrationPage(driver, window_size=(640, 500))
+    username_field = page.find_element_from_shadow_dom(By.CSS_SELECTOR, page.USER_NAME_FIELD)
     username_field.send_keys(username)
     action = ActionChains(driver)
     action.send_keys(Keys.TAB).perform()
 
 
-    warning_element = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.WARNING_ELEMENT_USERNAME)
+    warning_element = page.find_element_from_shadow_dom(By.CSS_SELECTOR, page.WARNING_ELEMENT_USERNAME)
     assert warning_element.text == TextElements.WARNING_INVALID_USERNAME
 
 
