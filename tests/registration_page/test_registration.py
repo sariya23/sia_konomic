@@ -12,6 +12,7 @@ from common.text_elements import TextElements
 from common.css_locators import CSSLocators
 from common.xpath_locators import XPATHLocators
 from common.emails import incorrect_emails
+from common.passwords import incorrect_passwords
 
 
 @pytest.mark.tags('mobile', 'tablet', 'desktop')
@@ -65,3 +66,31 @@ def test_invalid_email_field(driver: webdriver, email: str):
 
     warning_element = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.WARNING_ELEMENT_EMAIL)
     assert warning_element.text == TextElements.WARNING_INVALID_EMAIL
+
+
+@pytest.mark.parametrize("password", incorrect_passwords)
+def test_invalid_password_field(driver: webdriver, password: str):
+    """
+    Проверяем, что при вводе email'а неверного формата появляется
+    предупреждающее сообщение.
+
+    Как проверяем:
+    1. Вводим неверное значение имени пользователя;
+    2. Смотрим, что надпись появилась.
+    """
+    _ = RegistrationPage(driver, window_size=(640, 500))
+    wait = WebDriverWait(driver, 20)
+    wait.until(EC.element_to_be_clickable((By.XPATH, XPATHLocators.LOGO_ELEMENT)))
+    shadow_host = driver.find_element(By.CSS_SELECTOR, CSSLocators.SHADOW_HOST)
+    shadow_root = shadow_host.shadow_root
+    email_field = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.PASSWORD_FIELD)
+    email_field.send_keys(password)
+    action = ActionChains(driver)
+    action.send_keys(Keys.TAB).perform()
+
+    if len(password) < 8:
+        warning_element = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.WARNING_ELEMENT_PASSWORD)
+        assert warning_element.text == TextElements.WARNING_INVALID_PASSWORD_LEN
+    else:
+        warning_element = shadow_root.find_element(By.CSS_SELECTOR, CSSLocators.WARNING_ELEMENT_PASSWORD)
+        assert warning_element.text == TextElements.WARNING_INVALID_PASSWORD
