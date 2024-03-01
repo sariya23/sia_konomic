@@ -35,6 +35,7 @@ root@3d6063f281a6:/app# pytest -n auto
 # pip install -r requirements/dev_requirements.txt
 # pytest -n auto
 ```
+Также обязательно начиличе chromedriver версии 122.x.
 
 ## По поводу pageo
 На момент написания тестов в pageo нет поддержки работы с shadow DOM, поэтому пришлось писать самому. Issue уже направилю.
